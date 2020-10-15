@@ -1,0 +1,5 @@
+[cisco_ios]
+192.168.149.121	host_alias=R01
+192.168.149.122	host_alias=R02
+192.168.106.121	host_alias=R03
+192.168.106.122	host_alias=R04

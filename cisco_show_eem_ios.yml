@@ -1,0 +1,23 @@
+---
+- name: Playbook to view EEM script
+  hosts: 192.168.106.121,192.168.106.122,192.168.149.121,192.168.149.122
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+
+  - name: Checking EEM script configuration
+    ios_command:
+       commands:
+        - sh event manager policy registered
+    register: output
+    
+  - debug:
+      var: output.stdout
+
+#  - name: Verify if EEM trigger is enabled
+#    assert:
+#      that:
+#        - "'{BFD' in output"
+#      fail_msg: "BFD trigger is disabled"
+#      success_msg: "BFD trigger is enabled"

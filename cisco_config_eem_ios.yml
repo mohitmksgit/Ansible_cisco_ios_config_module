@@ -1,0 +1,29 @@
+
+- name: Playbook to add EEM configuration
+  hosts: 192.168.106.121,192.168.106.122,192.168.149.121,192.168.149.122
+  connection: network_cli
+  gather_facts: false
+
+  tasks:
+
+    - name: Adding new EEM configuration
+      ios_config:
+        lines:
+          - event syslog pattern "BFD adjacency down"
+          - action 0.1 syslog msg "EEM_Applet_shutting_down_BGP_neighbor_due_to_BFD_flap"
+          - action 1 cli command "enable"
+          - action 2 cli command "config t"
+          - action 3 cli command "router bgp {{ BGP_LOCAL_AS }}"
+          - action 4 cli command "neighbor {{ BGP_NEIGHBOR_IP }} shutdown"
+        match: exact
+        before: event manager applet BFD_FLAPPING 
+        save_when: changed
+        diff_against: running
+      notify: config_changed
+      register: cli_result
+  
+  handlers:
+    - name: "Display relevant changes"
+      listen: config_changed
+      debug:
+        msg: "{{ cli_result.commands }}"
