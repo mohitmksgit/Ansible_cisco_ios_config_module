@@ -15,9 +15,3 @@
   - debug:
       var: output.stdout
 
-#  - name: Verify if EEM trigger is enabled
-#    assert:
-#      that:
-#        - "'{BFD' in output"
-#      fail_msg: "BFD trigger is disabled"
-#      success_msg: "BFD trigger is enabled"
