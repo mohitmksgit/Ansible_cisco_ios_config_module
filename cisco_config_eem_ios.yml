@@ -1,6 +1,6 @@
 
 - name: Playbook to add EEM configuration
-  hosts: 192.168.106.121,192.168.106.122,192.168.149.121,192.168.149.122
+  hosts: cisco_ios
   connection: network_cli
   gather_facts: false
 
